@@ -19,14 +19,17 @@ public class Interpreter
 	{
             if(stm instanceof PrintStmt)
             {
+                System.out.println("Found Print Statement") ;
                 return this.interpret((PrintStmt)stm);
             }
             else if(stm instanceof AssignStmt)
             {
+                System.out.println("Found Assign Statement") ;
                 return this.interpret((AssignStmt)stm) ;
             }
             else if(stm instanceof Stmts)
             {
+                System.out.println("Found Multiple Statement") ;
                 this.interpret(((Stmts) stm).stmt) ;
                 return this.interpret(((Stmts) stm).stmtList) ;
             }
@@ -37,10 +40,14 @@ public class Interpreter
 	{
             if(stms instanceof Stmt)
             {
-                return this.interpret(stms.stmt) ;
+                System.out.println("AAAAAAAAAAAAAAAAAA") ;
+                this.interpret(stms.stmt) ;
+                return this.interpret(stms.stmtList) ;
             }
             else
             {
+                System.out.println("BLARG") ;
+                this.interpret((Stmts)stms.stmt) ;
                 return this.interpret(stms.stmtList) ;
             }
 	}
@@ -64,6 +71,10 @@ public class Interpreter
             {
                 return this.interpret((IdExp)exp) ;
             }
+            else if(exp instanceof BinaryOpExp)
+            {
+                return this.interpret((BinaryOpExp)exp) ;
+            }
             return 0;
  	}
 
@@ -74,13 +85,26 @@ public class Interpreter
 
  	public int interpret(ExpList list) 
 	{
-    	return this.interpret((LastExpList)list);
+            if(list instanceof LastExpList)
+            {
+                return this.interpret((LastExpList)list);
+            }
+            else
+            {
+                return this.interpret((LongExpList)list) ;
+            }
  	}
 
  	public int interpret(LastExpList list) 
 	{
     	return this.interpret(list.head);
   	}
+        
+        public int interpret(LongExpList list)
+        {
+            System.out.println(this.interpret(list.head)) ;
+            return this.interpret(list.tail) ;
+        }
         
         public int interpret(IdExp exp)
         {
@@ -91,5 +115,38 @@ public class Interpreter
         {
             map.put(exp.id , exp.exp) ;
             return 0 ;
+        }
+        
+        public int interpret(BinaryOpExp exp)
+        {
+            int left = this.interpret(exp.left) ;
+            int right = this.interpret(exp.right) ;
+            String operator = exp.operator ;
+            if(operator.equals("+"))
+            {
+                return left + right ;
+            }
+            else if(operator.equals("-"))
+            {
+                return left - right ;
+            }
+            else if(operator.equals("*"))
+            {
+                return left * right ;
+            }
+            else if(operator.equals("/"))
+            {
+                return left / right ;
+            }
+            else if(operator.equals("%"))
+            {
+                return left % right ;
+            }
+            else
+            {
+                //If the operator is something that souldn't be there it just
+                //returns a large "error" value.
+                return Integer.MAX_VALUE ;
+            }
         }
 }

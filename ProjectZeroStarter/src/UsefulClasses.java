@@ -66,23 +66,37 @@ class IdExp extends Expression
     }
 }
     
-
-class StringExp extends Expression
+class BinaryOpExp extends Expression
 {
-	public String str ;
-	public StringExp(String id)
-	{
-		str = id ;
-	}
+    public Expression left ;
+    public Expression right ;
+    public String operator ;
+    public BinaryOpExp(Expression left , String operator , Expression right)
+    {
+        this.left = left ;
+        this.right = right ; 
+        this.operator = operator ;
+    }
 }
 
 abstract class ExpList {}
+
+class LongExpList extends ExpList
+{
+    public Expression head ;
+    public ExpList tail ;
+    public LongExpList(Expression head , ExpList tail)
+    {
+        this.head = head ;
+        this.tail = tail ;
+    }
+}
 
 class LastExpList extends ExpList
 {
     public Expression head;
     public LastExpList(Expression h)
-	{
+    {
         head = h;
     }
 
