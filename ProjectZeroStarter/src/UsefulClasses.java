@@ -40,9 +40,9 @@ class AssignStmt extends Stmt
     public String id;
     public Expression exp;
     public AssignStmt(String i, Expression e)
-	{
-        id = i;
-        exp = e;
+    {
+        id = i ;
+        exp = e ;
     }
 }
 
@@ -56,6 +56,16 @@ class NumExp extends Expression
         num = n;
     }
 }
+
+class IdExp extends Expression
+{
+    public String id ;
+    public IdExp(String id)
+    {
+        this.id = id ;
+    }
+}
+    
 
 class StringExp extends Expression
 {
@@ -75,4 +85,5 @@ class LastExpList extends ExpList
 	{
         head = h;
     }
+
 }
