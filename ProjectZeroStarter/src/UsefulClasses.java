@@ -1,8 +1,8 @@
 package Starter;
 
 /*
-	You will need to add many more classes to this file to get the interpreter 
-	to work. The pattern shown below for the simple example should be enough 
+	You will need to add many more classes to this file to get the interpreter
+	to work. The pattern shown below for the simple example should be enough
 	to show you what to do for the remaining classes.
 */
 
@@ -22,7 +22,7 @@ class Stmts extends Stmt
 {
 	public Stmt stmt ;
 	public Stmts stmtList ;
-	
+
 	public Stmts (Stmt stmt1)
 	{
 		stmt = stmt1 ;
@@ -60,9 +60,11 @@ class NumExp extends Expression
 class StringExp extends Expression
 {
 	public String str ;
+  public int value;
 	public StringExp(String id)
 	{
 		str = id ;
+    value = id;
 	}
 }
 
