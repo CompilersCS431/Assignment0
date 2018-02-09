@@ -4,7 +4,7 @@ public class ProgramOne
 {
 	//the syntax tree representation of:  one <-- 30 ; echo(one)
 	//You should create separate programs for each tree you create.
-  	private static Stmt programOne = new Stmts( new AssignStmt( "one" , new NumExp(30) ) , new Stmts( new PrintStmt( new LastExpList(new StringExp("one") ) ) ) ) ;
+  	private static Stmt programOne = new Stmts( new AssignStmt( "one" , new NumExp(30) ) , new Stmts( new PrintStmt( new LastExpList(new IdExp("one") ) ) ) ) ;
 
 	public static void main(String[] args) 
 	{
