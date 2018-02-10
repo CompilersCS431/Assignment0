@@ -115,7 +115,14 @@ public class Interpreter
         
         public int interpret(AssignStmt exp)
         {
-            map.put(exp.id , exp.exp) ;
+            NumExp num;
+            if(map.containsKey(exp.id)){
+                num = new NumExp(this.interpret(exp.exp));
+                map.put(exp.id, num);
+            }
+            else{
+                map.put(exp.id , exp.exp) ;
+            }
             return 0 ;
         }
         
@@ -154,15 +161,15 @@ public class Interpreter
             
         public int interpret(UnaryOpExp exp)
         {
-            int expression = this.interpret(exp.exp) ;
+            //int expression = this.interpret(exp.exp) ;
             String operator = exp.operator ;
             if(operator.equals("<<"))
             {
-                return expression << 1;
+                return this.interpret(exp.exp) << 1;
             }
             else if(operator.equals(">>"))
             {
-                return expression >> 1 ;
+                return this.interpret(exp.exp) >> 1 ;
             }
             else
             {
