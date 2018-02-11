@@ -19,17 +19,17 @@ public class Interpreter
 	{
             if(stm instanceof PrintStmt)
             {
-                System.out.println("Found Print Statement") ;
+               // System.out.println("Found Print Statement") ;
                 return this.interpret((PrintStmt)stm);
             }
             else if(stm instanceof AssignStmt)
             {
-                System.out.println("Found Assign Statement") ;
+                //System.out.println("Found Assign Statement") ;
                 return this.interpret((AssignStmt)stm) ;
             }
             else if(stm instanceof Stmts)
             {
-                System.out.println("Found Multiple Statement") ;
+                //System.out.println("Found Multiple Statement") ;
                 this.interpret(((Stmts) stm).stmt) ;
                 return this.interpret(((Stmts) stm).stmtList) ;
             }

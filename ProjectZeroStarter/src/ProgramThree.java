@@ -9,7 +9,7 @@ public class ProgramThree
                                                     new Stmts( new PrintStmt( new LongExpList(new IdExp("four") , new LastExpList(new IdExp("five") ) ) ), 
                                                     new Stmts(new AssignStmt("four", new UnaryOpExp(new IdExp("four"), ">>")),
                                                     new Stmts (new PrintStmt(new LastExpList(new IdExp("four"))),
-                                                    new Stmts(new AssignStmt("five", new BinaryOpExp(new UnaryOpExp(new IdExp("four"), "<<"), "/", new UnaryOpExp(new IdExp("four"), ">>"))),
+                                                    new Stmts(new AssignStmt("five", new UnaryOpExp(new BinaryOpExp(new UnaryOpExp(new IdExp("four"), "<<"), "/", new IdExp("four")), ">>")),
                                                     new Stmts(new PrintStmt(new LongExpList(new IdExp("four"), new LastExpList(new IdExp("five")))))))))));
 	public static void main(String[] args) 
 	{
