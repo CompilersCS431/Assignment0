@@ -8,8 +8,6 @@ public class ProgramTwo
         private static Stmt programTwo = new Stmts( new AssignStmt("two" , new BinaryOpExp(new BinaryOpExp( new NumExp(20) , "-" , new NumExp(10) ) , "*" , new NumExp(5) ) ) ,
                                                     new Stmts( new AssignStmt("three" , new BinaryOpExp( new BinaryOpExp( new IdExp("two") , "%" , new NumExp(4) ) , "+" , new NumExp(6) ) ) , 
                                                     new Stmts( new PrintStmt( new LongExpList(new IdExp("two") , new LastExpList(new IdExp("three") ) ) ) ) ) ) ;
-        //public Stmt fish = new Stmts( new AssignStmt("three" , new BinaryOpExp( new BinaryOpExp( new IdExp("two") , "%" , new NumExp(4) ) , "+" , new NumExp(6) ) )
-        //                            , new Stmts( new PrintStmt( new LongExpList(new IdExp("two") , new LastExpList(new IdExp("three") ) ) ) ) ) ;
 	public static void main(String[] args) 
 	{
 		//Create a new Interpreter Object

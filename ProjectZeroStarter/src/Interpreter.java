@@ -19,17 +19,14 @@ public class Interpreter
 	{
             if(stm instanceof PrintStmt)
             {
-                System.out.println("Found Print Statement") ;
                 return this.interpret((PrintStmt)stm);
             }
             else if(stm instanceof AssignStmt)
             {
-                System.out.println("Found Assign Statement") ;
                 return this.interpret((AssignStmt)stm) ;
             }
             else if(stm instanceof Stmts)
             {
-                System.out.println("Found Multiple Statement") ;
                 this.interpret(((Stmts) stm).stmt) ;
                 return this.interpret(((Stmts) stm).stmtList) ;
             }
@@ -40,16 +37,16 @@ public class Interpreter
 	{
             if(stms instanceof Stmt)
             {
-                System.out.println("AAAAAAAAAAAAAAAAAA") ;
                 this.interpret(stms.stmt) ;
                 return this.interpret(stms.stmtList) ;
             }
-            else
+            else if(stms instanceof Stmts)
             {
-                System.out.println("BLARG") ;
                 this.interpret((Stmts)stms.stmt) ;
                 return this.interpret(stms.stmtList) ;
             }
+            return 0;
+
 	}
 
 	//each PrintStmt contains an ExpList
@@ -74,6 +71,9 @@ public class Interpreter
             else if(exp instanceof BinaryOpExp)
             {
                 return this.interpret((BinaryOpExp)exp) ;
+            }
+            else if(exp instanceof UnaryOpExp){
+                return this.interpret((UnaryOpExp) exp);
             }
             return 0;
  	}
@@ -113,7 +113,15 @@ public class Interpreter
         
         public int interpret(AssignStmt exp)
         {
-            map.put(exp.id , exp.exp) ;
+
+            NumExp num;
+            if(map.containsKey(exp.id)){
+                num = new NumExp(this.interpret(exp.exp));
+                map.put(exp.id, num);
+            }
+            else{
+                map.put(exp.id , exp.exp) ;
+            }
             return 0 ;
         }
         
@@ -149,4 +157,25 @@ public class Interpreter
                 return Integer.MAX_VALUE ;
             }
         }
+            
+        public int interpret(UnaryOpExp exp)
+        {
+            //int expression = this.interpret(exp.exp) ;
+            String operator = exp.operator ;
+            if(operator.equals("<<"))
+            {
+                return this.interpret(exp.exp) << 1;
+            }
+            else if(operator.equals(">>"))
+            {
+                return this.interpret(exp.exp) >> 1 ;
+            }
+            else
+            {
+                //If the operator is something that souldn't be there it just
+                //returns a large "error" value.
+                return Integer.MAX_VALUE ;
+            }
+        }
+
 }
