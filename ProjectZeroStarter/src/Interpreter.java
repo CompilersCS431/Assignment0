@@ -19,17 +19,14 @@ public class Interpreter
 	{
             if(stm instanceof PrintStmt)
             {
-               // System.out.println("Found Print Statement") ;
                 return this.interpret((PrintStmt)stm);
             }
             else if(stm instanceof AssignStmt)
             {
-                //System.out.println("Found Assign Statement") ;
                 return this.interpret((AssignStmt)stm) ;
             }
             else if(stm instanceof Stmts)
             {
-                //System.out.println("Found Multiple Statement") ;
                 this.interpret(((Stmts) stm).stmt) ;
                 return this.interpret(((Stmts) stm).stmtList) ;
             }
@@ -49,6 +46,7 @@ public class Interpreter
                 return this.interpret(stms.stmtList) ;
             }
             return 0;
+
 	}
 
 	//each PrintStmt contains an ExpList
@@ -115,6 +113,7 @@ public class Interpreter
         
         public int interpret(AssignStmt exp)
         {
+
             NumExp num;
             if(map.containsKey(exp.id)){
                 num = new NumExp(this.interpret(exp.exp));
@@ -178,4 +177,5 @@ public class Interpreter
                 return Integer.MAX_VALUE ;
             }
         }
+
 }
