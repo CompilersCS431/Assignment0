@@ -13,7 +13,6 @@ public class ProgramTwo
 	    Interpreter interpreter = new Interpreter();
 	    System.out.println("Evaluating...");
 	    //Call the overloaded interpret method with the
-	    //static program created above. Should print out 34.
 	    interpreter.interpret(programTwo);
 	}
 }
