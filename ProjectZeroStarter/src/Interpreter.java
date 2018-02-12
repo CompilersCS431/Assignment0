@@ -37,12 +37,16 @@ public class Interpreter
 	{
             if(stms instanceof Stmt)
             {
-                return this.interpret(stms.stmt) ;
-            }
-            else
-            {
+                this.interpret(stms.stmt) ;
                 return this.interpret(stms.stmtList) ;
             }
+            else if(stms instanceof Stmts)
+            {
+                this.interpret((Stmts)stms.stmt) ;
+                return this.interpret(stms.stmtList) ;
+            }
+            return 0;
+
 	}
 
 	//each PrintStmt contains an ExpList
@@ -64,6 +68,13 @@ public class Interpreter
             {
                 return this.interpret((IdExp)exp) ;
             }
+            else if(exp instanceof BinaryOpExp)
+            {
+                return this.interpret((BinaryOpExp)exp) ;
+            }
+            else if(exp instanceof UnaryOpExp){
+                return this.interpret((UnaryOpExp) exp);
+            }
             return 0;
  	}
 
@@ -74,13 +85,26 @@ public class Interpreter
 
  	public int interpret(ExpList list) 
 	{
-    	return this.interpret((LastExpList)list);
+            if(list instanceof LastExpList)
+            {
+                return this.interpret((LastExpList)list);
+            }
+            else
+            {
+                return this.interpret((LongExpList)list) ;
+            }
  	}
 
  	public int interpret(LastExpList list) 
 	{
     	return this.interpret(list.head);
   	}
+        
+        public int interpret(LongExpList list)
+        {
+            System.out.println(this.interpret(list.head)) ;
+            return this.interpret(list.tail) ;
+        }
         
         public int interpret(IdExp exp)
         {
@@ -89,7 +113,69 @@ public class Interpreter
         
         public int interpret(AssignStmt exp)
         {
-            map.put(exp.id , exp.exp) ;
+
+            NumExp num;
+            if(map.containsKey(exp.id)){
+                num = new NumExp(this.interpret(exp.exp));
+                map.put(exp.id, num);
+            }
+            else{
+                map.put(exp.id , exp.exp) ;
+            }
             return 0 ;
         }
+        
+        public int interpret(BinaryOpExp exp)
+        {
+            int left = this.interpret(exp.left) ;
+            int right = this.interpret(exp.right) ;
+            String operator = exp.operator ;
+            if(operator.equals("+"))
+            {
+                return left + right ;
+            }
+            else if(operator.equals("-"))
+            {
+                return left - right ;
+            }
+            else if(operator.equals("*"))
+            {
+                return left * right ;
+            }
+            else if(operator.equals("/"))
+            {
+                return left / right ;
+            }
+            else if(operator.equals("%"))
+            {
+                return left % right ;
+            }
+            else
+            {
+                //If the operator is something that souldn't be there it just
+                //returns a large "error" value.
+                return Integer.MAX_VALUE ;
+            }
+        }
+            
+        public int interpret(UnaryOpExp exp)
+        {
+            //int expression = this.interpret(exp.exp) ;
+            String operator = exp.operator ;
+            if(operator.equals("<<"))
+            {
+                return this.interpret(exp.exp) << 1;
+            }
+            else if(operator.equals(">>"))
+            {
+                return this.interpret(exp.exp) >> 1 ;
+            }
+            else
+            {
+                //If the operator is something that souldn't be there it just
+                //returns a large "error" value.
+                return Integer.MAX_VALUE ;
+            }
+        }
+
 }
